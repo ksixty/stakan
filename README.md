@@ -12,18 +12,18 @@ I am writing STAKAN to:
 
 ## Progress
 
-[X] Read words
-[X] Parse words into tokens
-[X] Evaluate words
-[X] Implement some primeops
-[X] Implement `:` and `;`
-[ ] Implement `branch` and `branch?`
-[ ] Implement `if`, `then`, `else`
-[ ] Implement the `until` loop
-[ ] Implement all Forth primitives
-[ ] Write a useful standard library (maybe, some web server stuff)
-[ ] Get the code reviewed by someone who is proficient in C
-[ ] ...
+- [x] Read words
+- [x] Parse words into tokens
+- [x] Evaluate words
+- [x] Implement some primeops
+- [x] Implement `:` and `;`
+- [ ] Implement `branch` and `branch?`
+- [ ] Implement `if`, `then`, `else`
+- [ ] Implement the `until` loop
+- [ ] Implement all Forth primitives
+- [ ] Write a useful standard library (maybe, some web server - stuff)
+- [ ] Get the code reviewed by someone who is proficient in C
+- [ ] ...
 
 ## Custom words
 
