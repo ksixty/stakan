@@ -10,11 +10,5 @@
 
 #define TOKEN_SIZE 255
 
-#define PROMPT "> "
-
 char peek(FILE *i);
 bool read(FILE *i, Token *token);
-
-typedef enum {
-  RUN, DEF
-} read_modes;

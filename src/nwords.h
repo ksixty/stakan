@@ -3,8 +3,10 @@
 #include "stack.h"
 #include "eval.h"
 #include "stakan.h"
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 #include <stdlib.h>
 
 #define DEF_SIZE 128
@@ -27,14 +29,14 @@ NWORD_OPERATOR(geq, >=)
 NWORD_OPERATOR(leq, <=)
 
 NWORD(dots) {
-  sprint(s); msg("ok\n");
+  sprint(s); msg("\n");
 }
 
 NWORD(dot) {
   cell a;
   if (spop(s, &a)) {
     char* r;
-    asprintf(&r, "\n%Lg ok.\n", a);
+    asprintf(&r, "%Lg\n", a);
     msg(r);
     free(r);
   }
@@ -70,24 +72,67 @@ NWORD(not) {
   PUSH(!a);
 }
 
+NWORD(sine) {
+  POP(a);
+  PUSH(sin(a));
+}
+
+NWORD(cosine) {
+  POP(a);
+  PUSH(cos(a));
+}
+
+NWORD(tang) {
+  POP(a);
+  PUSH(tan(a));
+}
+
+NWORD(pi) {
+  PUSH(M_PI);
+}
+
 NWORD(over) {
   POP(a); POP(b);
   PUSH(b); PUSH(a); PUSH(b);
+}
+
+NWORD(bxor) {
+  POP(a); POP(b);
+  PUSH((long) a ^ (long) b);
+}
+
+NWORD(band) {
+  POP(a); POP(b);
+  PUSH((long) a & (long) b);
+}
+
+NWORD(bor) {
+  POP(a); POP(b);
+  PUSH((long) a | (long) b);
+}
+
+NWORD(key) {
+  PUSH(getchar());
+}
+
+NWORD(emit) {
+  POP(a);
+  if (isprint(a)) msg_one((char)a);
 }
 
 NWORD(def) {
   ENTRY e;
   Token *token = (Token *)malloc(sizeof(Token));
   size_t len = 0;
-  read(stdin, token);
   
+  read(stdin, token);  
   if (!token->is_word) msg("? not a name\n");
+  
   e.key = strdup(token->word);
   e.data = malloc(sizeof(Word));
-
   Word *word = e.data;
+
   word->body = malloc(sizeof(Token*) * DEF_SIZE);
-  char word_start = '\0';
 
   while (1) {
     token = (Token *)malloc(sizeof(Token));
@@ -119,6 +164,10 @@ void init_nwords() {
     add_nword("<", lt);
     add_nword(">=", geq);
     add_nword("<=", leq);
+    
+    add_nword("^", bxor);
+    add_nword("&", band);
+    add_nword("|", bor);
 
     add_nword(".S", dots);
     add_nword(".", dot);
@@ -128,6 +177,14 @@ void init_nwords() {
     add_nword("OVER", over);
     add_nword("CEIL", cei);
     add_nword("FLOOR", flo);
+
+    add_nword("SIN", sine);
+    add_nword("COS", cosine);
+    add_nword("TAN", tang);
+    add_nword("PI", pi);
+
+    add_nword("KEY", key);
+    add_nword("EMIT", emit);
 
     add_nword(":", def);
 }

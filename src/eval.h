@@ -24,6 +24,6 @@ typedef struct {
   };
 } Word;
 
-void eval(Token* token, Stack *s);
+bool eval(Token* token, Stack *s);
 void eval_body(Token **body, int body_len, Stack *s);
 void add_nword(char* name, nword_ptr fn);

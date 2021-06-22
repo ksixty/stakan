@@ -44,10 +44,6 @@ bool fetch(FILE *i, char* input) {
   bool interactive = i == stdin;
 
   while (1) {
-
-    if (prompt) {
-      msg(PROMPT);
-    }
     
     c = getc(i);
     prompt = (interactive && c == '\n');
@@ -95,11 +91,6 @@ bool parse(char *input, Token *token) {
 
 bool read(FILE *i, Token *token) {
   char buf[TOKEN_SIZE];
-  if (prompt) {
-    msg(PROMPT);
-    prompt = false;
-  }
-  if (fetch(i, buf))
-    return parse(buf, token);
-  else return false;
+  if (prompt) msg("> ");
+  return fetch(i, buf) && parse(buf, token);
 }

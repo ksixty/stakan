@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-void eval(Token *token, Stack *s) {
+bool eval(Token *token, Stack *s) {
   if (token->is_word) {
     ENTRY search, *result;
     search.key = token->word;
@@ -21,11 +21,12 @@ void eval(Token *token, Stack *s) {
         word->fn(s);
       }
     } else {
-      msg("? undefined word"); msg("\n");
+      return false;
     }
   } else {
     spush(s, token->value);
   }
+  return true;
 }
 
 void eval_body(Token **body, int body_len, Stack *s) {

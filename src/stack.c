@@ -46,9 +46,12 @@ bool sempty(Stack *s) { return s->head == -1; }
 bool sfull(Stack *s) { return s->head == STACK_SIZE; }
 
 void sprint(Stack *s) {
+  char *p;
+  asprintf(&p, "<%d> ", s->head + 1);
+  msg(p);
   for (int i = 0; i <= s->head; i++) {
-    char *p;
     asprintf(&p, "%Lg ", s->base[i]);
     msg(p);
   }
+  free(p);
 }
